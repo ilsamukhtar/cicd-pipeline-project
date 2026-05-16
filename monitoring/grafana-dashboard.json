@@ -1,0 +1,48 @@
+{
+  "dashboard": {
+    "title": "Flask CI/CD App — Ilsa Mukhtar",
+    "uid": "flask-cicd-ilsamukhtar",
+    "tags": ["flask", "cicd", "ilsamukhtar"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "App Requests Total",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "app_requests_total",
+            "legendFormat": "Total Requests"
+          }
+        ],
+        "gridPos": { "x": 0, "y": 0, "w": 6, "h": 4 }
+      },
+      {
+        "id": 2,
+        "title": "Pod CPU Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(container_cpu_usage_seconds_total{namespace='flask-app'}[5m])",
+            "legendFormat": "{{pod}}"
+          }
+        ],
+        "gridPos": { "x": 6, "y": 0, "w": 12, "h": 8 }
+      },
+      {
+        "id": 3,
+        "title": "Pod Memory Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "container_memory_usage_bytes{namespace='flask-app'}",
+            "legendFormat": "{{pod}}"
+          }
+        ],
+        "gridPos": { "x": 0, "y": 8, "w": 12, "h": 8 }
+      }
+    ],
+    "time": { "from": "now-1h", "to": "now" },
+    "refresh": "30s"
+  }
+}

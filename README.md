@@ -1,0 +1,178 @@
+# 🚀 Production-Ready CI/CD Pipeline on AWS
+
+![CI/CD](https://img.shields.io/badge/CI%2FCD-Jenkins%20%7C%20GitHub%20Actions-blue)
+![Docker](https://img.shields.io/badge/Container-Docker-2496ED?logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Orchestration-Kubernetes-326CE5?logo=kubernetes&logoColor=white)
+![Terraform](https://img.shields.io/badge/IaC-Terraform-7B42BC?logo=terraform&logoColor=white)
+![AWS](https://img.shields.io/badge/Cloud-AWS%20eu--north--1-FF9900?logo=amazonaws&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Monitoring-Prometheus%20%7C%20Grafana-E6522C?logo=prometheus&logoColor=white)
+![Python](https://img.shields.io/badge/App-Python%20Flask-3776AB?logo=python&logoColor=white)
+
+> **Developed by:** Ilsa Mukhtar
+> **GitHub:** [github.com/ilsamukhtar](https://github.com/ilsamukhtar)
+> **LinkedIn:** [linkedin.com/in/ilsa-mukhtar](https://linkedin.com/in/ilsa-mukhtar)
+> **DockerHub:** [hub.docker.com/u/ilsamukhtar](https://hub.docker.com/u/ilsamukhtar)
+
+---
+
+## 📌 Project Overview
+
+
+A **production-grade, end-to-end CI/CD pipeline** for a Python Flask application —
+built with real-world DevOps tools and industry best practices.
+
+| Stage | Tool Used |
+|---|---|
+| 👩‍💻 Application | Python Flask |
+| 🧪 Testing | Pytest |
+| 🐳 Containerization | Docker |
+| ☸️ Orchestration | Kubernetes |
+| 🔧 CI/CD | Jenkins + GitHub Actions |
+| 🏗️ Infrastructure | Terraform (AWS) |
+| ☁️ Cloud | AWS — Region: eu-north-1 |
+| 📊 Monitoring | Prometheus + Grafana |
+
+---
+
+## 🏗️ Architecture
+
+```
+Developer Push (GitHub)
+        ↓
+GitHub Actions / Jenkins (CI)
+        ↓
+Run Tests (Pytest)
+        ↓
+Build Docker Image
+        ↓
+Push to DockerHub (ilsamukhtar/flask-cicd-app)
+        ↓
+Deploy to Kubernetes (AWS eu-north-1)
+        ↓
+Prometheus scrapes metrics
+        ↓
+Grafana Dashboards (Real-time visibility)
+```
+
+---
+
+## 📁 Project Structure
+
+```
+cicd-pipeline-project/
+├── app/
+│   ├── app.py
+│   ├── requirements.txt
+│   └── tests/
+│       └── test_app.py
+├── Dockerfile
+├── docker-compose.yml
+├── Jenkinsfile
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml
+├── terraform/
+│   ├── provider.tf
+│   ├── variables.tf
+│   ├── main.tf
+│   └── outputs.tf
+├── kubernetes/
+│   ├── namespace.yaml
+│   ├── deployment.yaml
+│   └── service.yaml
+├── monitoring/
+│   ├── prometheus-config.yaml
+│   └── grafana-dashboard.json
+└── README.md
+```
+
+---
+
+## 🚀 Quick Start
+
+### Step 1 — Clone Repository
+```bash
+git clone https://github.com/ilsamukhtar/cicd-pipeline-project.git
+cd cicd-pipeline-project
+```
+
+### Step 2 — Run Locally with Docker
+```bash
+docker-compose up -d
+curl http://localhost:5000
+curl http://localhost:5000/health
+```
+
+### Step 3 — Run Tests
+```bash
+pip install -r app/requirements.txt
+cd app
+python -m pytest tests/ -v
+```
+
+### Step 4 — Build & Push Docker Image
+```bash
+docker build -t ilsamukhtar/flask-cicd-app:latest .
+docker push ilsamukhtar/flask-cicd-app:latest
+```
+
+### Step 5 — Deploy to Kubernetes (Minikube)
+```bash
+minikube start
+kubectl apply -f kubernetes/namespace.yaml
+kubectl apply -f kubernetes/deployment.yaml
+kubectl apply -f kubernetes/service.yaml
+kubectl get pods -n flask-app
+minikube service flask-cicd-service -n flask-app
+```
+
+### Step 6 — Provision AWS Infrastructure
+```bash
+cd terraform
+terraform init
+terraform plan
+terraform apply -auto-approve
+terraform output
+# Kaam khatam hone ke baad:
+terraform destroy -auto-approve
+```
+
+### Step 7 — Setup Monitoring
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+kubectl create namespace monitoring
+helm install prometheus prometheus-community/kube-prometheus-stack \
+  --namespace monitoring \
+  --set grafana.adminPassword=admin123
+kubectl port-forward svc/prometheus-grafana 3000:80 -n monitoring
+```
+> Grafana: `http://localhost:3000` | User: `admin` | Pass: `admin123`
+
+---
+
+## 🔐 GitHub Secrets Setup
+
+GitHub → Repository → Settings → Secrets → Actions:
+
+| Secret Name | Value |
+|---|---|
+| `DOCKERHUB_USERNAME` | `ilsamukhtar` |
+| `DOCKERHUB_TOKEN` | DockerHub Access Token |
+
+---
+
+## 👩‍💻 Author
+
+**Ilsa Mukhtar** — DevOps & Cloud Engineer
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-ilsa--mukhtar-0A66C2?logo=linkedin&logoColor=white)](https://linkedin.com/in/ilsa-mukhtar)
+[![GitHub](https://img.shields.io/badge/GitHub-ilsamukhtar-181717?logo=github&logoColor=white)](https://github.com/ilsamukhtar)
+[![DockerHub](https://img.shields.io/badge/DockerHub-ilsamukhtar-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/u/ilsamukhtar)
+[![Email](https://img.shields.io/badge/Email-ilsamukhtar3%40gmail.com-EA4335?logo=gmail&logoColor=white)](mailto:ilsamukhtar3@gmail.com)
+
+---
+
+## 📜 License
+
+MIT License — feel free to use and modify.
