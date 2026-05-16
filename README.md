@@ -36,22 +36,43 @@ built with real-world DevOps tools and industry best practices.
 
 ## 🏗️ Architecture
 
-```
-Developer Push (GitHub)
-        ↓
-GitHub Actions / Jenkins (CI)
-        ↓
-Run Tests (Pytest)
-        ↓
-Build Docker Image
-        ↓
-Push to DockerHub (ilsamukhtar/flask-cicd-app)
-        ↓
-Deploy to Kubernetes (AWS eu-north-1)
-        ↓
-Prometheus scrapes metrics
-        ↓
-Grafana Dashboards (Real-time visibility)
+```mermaid
+flowchart TD
+    A([👩‍💻 Developer Push\ngit push → GitHub]) --> B
+
+    B([⚙️ GitHub Actions + Jenkins CI\nWebhook triggers pipeline]) --> C
+
+    C([🧪 Run Tests - Pytest\napp/tests/test_app.py]) --> D
+
+    D([🐳 Docker Build\ndocker build → Dockerfile]) --> E
+
+    E([📤 Push to DockerHub\nilsamukhtar/flask-cicd-app]) --> F
+
+    F([🏗️ Terraform — AWS eu-north-1\nVPC + EC2 + Security Group]) --> G
+
+    G([☸️ Deploy to Kubernetes\n2 replicas — NodePort service]) --> H
+
+    G --> NS([📁 namespace.yaml\nflask-app])
+    G --> DP([📄 deployment.yaml\n2 replicas])
+    G --> SV([📄 service.yaml\nNodePort 30007])
+
+    H([✅ Flask App Running\nPort 5000 — /health endpoint]) --> I
+
+    I([📊 Prometheus + Grafana\nMetrics scrape → Dashboard])
+
+    style A fill:#7F77DD,stroke:#534AB7,color:#fff
+    style B fill:#378ADD,stroke:#185FA5,color:#fff
+    style C fill:#1D9E75,stroke:#0F6E56,color:#fff
+    style D fill:#378ADD,stroke:#185FA5,color:#fff
+    style E fill:#378ADD,stroke:#185FA5,color:#fff
+    style F fill:#BA7517,stroke:#854F0B,color:#fff
+    style G fill:#1D9E75,stroke:#0F6E56,color:#fff
+    style NS fill:#5DCAA5,stroke:#1D9E75,color:#fff
+    style DP fill:#5DCAA5,stroke:#1D9E75,color:#fff
+    style SV fill:#5DCAA5,stroke:#1D9E75,color:#fff
+    style H fill:#639922,stroke:#3B6D11,color:#fff
+    style I fill:#D85A30,stroke:#993C1D,color:#fff
+` ``
 ```
 
 ---
