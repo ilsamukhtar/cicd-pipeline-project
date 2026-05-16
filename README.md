@@ -143,7 +143,7 @@ terraform init
 terraform plan
 terraform apply -auto-approve
 terraform output
-# Kaam khatam hone ke baad:
+# After Project Completition
 terraform destroy -auto-approve
 ```
 
