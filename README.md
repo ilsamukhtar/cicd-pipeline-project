@@ -17,7 +17,6 @@
 
 ## 📌 Project Overview
 
-
 A **production-grade, end-to-end CI/CD pipeline** for a Python Flask application —
 built with real-world DevOps tools and industry best practices.
 
@@ -39,25 +38,16 @@ built with real-world DevOps tools and industry best practices.
 ```mermaid
 flowchart TD
     A([👩‍💻 Developer Push\ngit push → GitHub]) --> B
-
     B([⚙️ GitHub Actions + Jenkins CI\nWebhook triggers pipeline]) --> C
-
-    C([🧪 Run Tests - Pytest\napp/tests/test_app.py]) --> D
-
+    C([🧪 Run Tests — Pytest\napp/tests/test_app.py]) --> D
     D([🐳 Docker Build\ndocker build → Dockerfile]) --> E
-
     E([📤 Push to DockerHub\nilsamukhtar/flask-cicd-app]) --> F
-
     F([🏗️ Terraform — AWS eu-north-1\nVPC + EC2 + Security Group]) --> G
-
     G([☸️ Deploy to Kubernetes\n2 replicas — NodePort service]) --> H
-
     G --> NS([📁 namespace.yaml\nflask-app])
     G --> DP([📄 deployment.yaml\n2 replicas])
     G --> SV([📄 service.yaml\nNodePort 30007])
-
     H([✅ Flask App Running\nPort 5000 — /health endpoint]) --> I
-
     I([📊 Prometheus + Grafana\nMetrics scrape → Dashboard])
 
     style A fill:#7F77DD,stroke:#534AB7,color:#fff
@@ -72,7 +62,6 @@ flowchart TD
     style SV fill:#5DCAA5,stroke:#1D9E75,color:#fff
     style H fill:#639922,stroke:#3B6D11,color:#fff
     style I fill:#D85A30,stroke:#993C1D,color:#fff
-` ``
 ```
 
 ---
@@ -168,6 +157,7 @@ helm install prometheus prometheus-community/kube-prometheus-stack \
   --set grafana.adminPassword=admin123
 kubectl port-forward svc/prometheus-grafana 3000:80 -n monitoring
 ```
+
 > Grafana: `http://localhost:3000` | User: `admin` | Pass: `admin123`
 
 ---
