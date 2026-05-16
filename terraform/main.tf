@@ -3,6 +3,7 @@ resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
   enable_dns_hostnames = true
+
   tags = {
     Name    = "${var.project_name}-vpc"
     Owner   = "Ilsa Mukhtar"
@@ -13,6 +14,7 @@ resource "aws_vpc" "main" {
 # Internet Gateway
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
+
   tags = {
     Name = "${var.project_name}-igw"
   }
@@ -24,6 +26,7 @@ resource "aws_subnet" "public" {
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "${var.aws_region}a"
   map_public_ip_on_launch = true
+
   tags = {
     Name = "${var.project_name}-subnet"
   }
@@ -32,15 +35,18 @@ resource "aws_subnet" "public" {
 # Route Table
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.main.id
+
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
   }
+
   tags = {
     Name = "${var.project_name}-rt"
   }
 }
 
+# Route Table Association
 resource "aws_route_table_association" "rta" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public_rt.id
@@ -99,10 +105,17 @@ resource "aws_security_group" "flask_sg" {
 # Ubuntu AMI
 data "aws_ami" "ubuntu" {
   most_recent = true
-  owners      = ["099720109477"]
+
+  owners = ["099720109477"]
+
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-22.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
   }
 }
 
